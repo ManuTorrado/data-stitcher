@@ -7,7 +7,9 @@ const FlowContext = createContext();
 const App = () => {
   return (
     <>
-      <Main />
+      <FlowContext.Provider>
+        <Main />
+      </FlowContext.Provider>
     </>
   );
 };
