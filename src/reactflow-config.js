@@ -25,7 +25,7 @@ export const initialNodes = [
   },
 ];
 export const initialEdges = [
-  { id: "e1-2", source: "1", target: "2", type: "straight" },
+  { id: "e1-2", source: "1", target: "2", type: "smoothstep" },
 ];
 
 export const nodeTypes = {
