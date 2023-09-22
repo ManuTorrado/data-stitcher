@@ -7,11 +7,22 @@ import ReactFlow, {
   useEdgesState,
   addEdge,
   BackgroundVariant,
+  MarkerType,
 } from "reactflow";
+
+import CustomNode from "./comps/nodes/CustomNode";
+import ArrowLine from "./comps/lines/ArrowLine";
+import { MdCable } from "react-icons/md";
+import { CiFloppyDisk } from "react-icons/ci";
 
 import "reactflow/dist/style.css";
 
-import { initialNodes, initialEdges, nodeTypes } from "./reactflow-config";
+import {
+  initialNodes,
+  initialEdges,
+  nodeTypes,
+  edgeTypes,
+} from "./reactflow-config";
 
 import { useCallback, useState } from "react";
 import {
@@ -22,6 +33,20 @@ import {
   Button,
   Typography,
 } from "@mui/material";
+
+const connectionLineStyle = {
+  strokeWidth: 1,
+  stroke: "grey",
+};
+
+const defaultEdgeOptions = {
+  style: { strokeWidth: 1, stroke: "grey" },
+  type: "floating",
+  markerEnd: {
+    type: MarkerType.ArrowClosed,
+    color: "grey",
+  },
+};
 
 const Main = () => {
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
@@ -56,18 +81,28 @@ const Main = () => {
             color="inherit"
             aria-label="menu"
             sx={{ mr: 2 }}
-          ></IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            News
-          </Typography>
+          >
+            <MdCable />
+          </IconButton>
+          <IconButton
+            edge="start"
+            color="inherit"
+            aria-label="menu"
+            sx={{ mr: 2 }}
+          >
+            <CiFloppyDisk />
+          </IconButton>
+
           <Button onClick={addNode} color="inherit">
             +
           </Button>
+          <Button></Button>
         </Toolbar>
       </AppBar>
       <ReactFlow
         nodes={nodes}
         edges={edges}
+        edgeTypes={edgeTypes}
         nodeTypes={nodeTypes}
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
@@ -75,6 +110,9 @@ const Main = () => {
         fitView
         snapToGrid
         snapGrid={[5, 5]}
+        connectionLineStyle={connectionLineStyle}
+        connectionLineComponent={ArrowLine}
+        defaultEdgeOptions={defaultEdgeOptions}
       >
         <Controls />
         <MiniMap />

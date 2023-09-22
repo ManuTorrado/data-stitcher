@@ -8,7 +8,7 @@ body,
   box-sizing: border-box;
   font-family: sans-serif;
 }
-
+/*
 .react-flow .react-flow__handle {
   width: 30px;
   height: 14px;
@@ -24,4 +24,48 @@ body,
 }
 .react-flow__background {
   background-color: transparent;
+}
+*/
+
+.customNodeBody {
+  width: 150px;
+  height: 80px;
+  border: 1px solid black;
+  position: relative;
+  overflow: hidden;
+  /* border-radius: 10px;*/
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+}
+
+.customNode:before {
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  height: 20px;
+  width: 40px;
+  transform: translate(-50%, 0);
+  background: #ffffff;
+  z-index: 1000;
+  line-height: 1;
+  /*border-radius: 4px;*/
+  color: #fff;
+  font-size: 9px;
+  border: 2px solid #222138;
+}
+
+div.customHandle {
+  width: 100%;
+  height: 90%;
+  background: blue;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 0;
+  transform: none;
+  border: none;
+  opacity: 0;
 }

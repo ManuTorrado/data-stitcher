@@ -1,5 +1,9 @@
-import UnbordedNode from "./comps/UnbordedNode";
+import UnbordedNode from "./comps/nodes/UnbordedNode";
+import NoteNode from "./comps/nodes/NoteNode";
 import user from "./user.png";
+import ArrowLine from "./comps/lines/ArrowLine";
+import FloatingEdge from "./comps/FloatingEdge";
+import CustomNode from "./comps/nodes/CustomNode";
 
 export const initialNodes = [
   {
@@ -12,7 +16,7 @@ export const initialNodes = [
         </div>
       ),
     },
-    type: "unborded",
+    type: "complete",
     style: {
       background: "rgba(255, 0, 0, 0)",
     },
@@ -23,11 +27,21 @@ export const initialNodes = [
     data: { label: "2" },
     style: { background: "rgba(255, 0, 0, 0)" },
   },
+  {
+    id: "3",
+    position: { x: 0, y: 100 },
+    data: { label: "amsdkqjkwelqjewlq" },
+    type: "complete",
+  },
 ];
-export const initialEdges = [
-  { id: "e1-2", source: "1", target: "2", type: "smoothstep" },
-];
+export const initialEdges = [];
 
 export const nodeTypes = {
   unborded: UnbordedNode,
+  note: NoteNode,
+  complete: CustomNode,
+};
+
+export const edgeTypes = {
+  floating: FloatingEdge,
 };
