@@ -24,7 +24,7 @@ import {
   edgeTypes,
 } from "./reactflow-config";
 
-import { useCallback, useState } from "react";
+import { useCallback, useContext, useState } from "react";
 import {
   AppBar,
   Drawer,
@@ -33,6 +33,7 @@ import {
   Button,
   Typography,
 } from "@mui/material";
+import { FlowContext } from "./App";
 
 const connectionLineStyle = {
   strokeWidth: 1,
@@ -51,12 +52,10 @@ const defaultEdgeOptions = {
 const Main = () => {
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
-
+  const { cableSelected, setCableSelected } = useContext(FlowContext);
   const [backgroundProps, setBackground] = useState("dots");
 
   const addNode = () => {
-    console.log(nodes.length);
-    console.log(nodes);
     setNodes([
       ...nodes,
       {
@@ -81,6 +80,9 @@ const Main = () => {
             color="inherit"
             aria-label="menu"
             sx={{ mr: 2 }}
+            onClick={() => {
+              setCableSelected(!cableSelected);
+            }}
           >
             <MdCable />
           </IconButton>

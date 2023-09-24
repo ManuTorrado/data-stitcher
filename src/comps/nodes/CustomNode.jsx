@@ -1,10 +1,9 @@
-import { Handle, Position, useStore } from "reactflow";
+import { Handle, Position, useStore, useUpdateNodeInternals } from "reactflow";
 import { NodeResizer, NodeResizeControl } from "reactflow";
-import { BsFillArrowDownRightCircleFill } from "react-icons/bs";
-import { useState } from "react";
-import { IconButton } from "@mui/material";
 
 import user from "../../user.png";
+import { useContext, useEffect } from "react";
+import { FlowContext } from "../../App";
 
 const connectionNodeIdSelector = (state) => state.connectionNodeId;
 
@@ -13,16 +12,17 @@ const sourceStyle = {
 };
 
 const CustomNode = ({ id }) => {
-  const [dragSelect, setDragSelected] = useState(false);
+  const updateNodeInternals = useUpdateNodeInternals();
+  const { cableSelected, setCableSelected } = useContext(FlowContext);
 
-  const [hover, setHover] = useState(false);
-  const toggleHover = () => setHover(true);
-  const disableHover = () => setHover(false);
   const connectionNodeId = useStore(connectionNodeIdSelector);
 
   const isConnecting = !!connectionNodeId;
   const isTarget = connectionNodeId && connectionNodeId !== id;
-  // const label = isTarget ? "Drop here" : "Drag to connect";
+
+  useEffect(() => {
+    updateNodeInternals(id);
+  }, [cableSelected]);
 
   return (
     <div className="customNode">
@@ -35,12 +35,14 @@ const CustomNode = ({ id }) => {
       >
         {/* If handles are conditionally rendered and not present initially, you need to update the node internals https://reactflow.dev/docs/api/hooks/use-update-node-internals/ */}
         {/* In this case we don't need to use useUpdateNodeInternals, since !isConnecting is true at the beginning and all handles are rendered initially. */}
+
         {!isConnecting && (
           <Handle
             className="customHandle"
             position={Position.Right}
             type="source"
             style={sourceStyle}
+            isConnectable={cableSelected}
           />
         )}
 
@@ -48,6 +50,7 @@ const CustomNode = ({ id }) => {
           className="customHandle"
           position={Position.Left}
           type="target"
+          isConnectable={cableSelected}
         />
       </div>
     </div>
