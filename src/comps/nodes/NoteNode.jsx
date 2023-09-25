@@ -1,8 +1,9 @@
 import React, { memo, useEffect, useState } from "react";
-import { Handle, NodeProps, Position } from "reactflow";
+import { Handle, NodeProps, Position, useUpdateNodeInternals } from "reactflow";
 import { BsFillArrowDownRightCircleFill } from "react-icons/bs";
 import CustomNode from "./CustomNode";
 import ResizeRotateNode from "./ResizableNode";
+import useOutsideClick from "../../hooks/clickOutside";
 
 const style = {
   backgroundColor: "grey",
@@ -10,24 +11,38 @@ const style = {
 };
 
 const NoteNode = ({ data }) => {
+  const updateNodeInternals = useUpdateNodeInternals();
   const [isSelected, SetSelected] = useState(false);
+  const [resizable, setResizable] = useState(false);
+
+  const handleOutsideClick = () => {
+    setResizable(false);
+    SetSelected(false);
+  };
+
+  const refOutside = useOutsideClick(handleOutsideClick);
 
   const handleClick = () => {
-    console.log("clicked");
+    setResizable(true);
     SetSelected(true);
   };
 
-  useEffect(() => {});
+  useEffect(() => {}, []);
 
   document.addEventListener("keydown", function (event) {
     if (event.key === "Delete") {
       if (isSelected) {
+        event.stopPropagation();
         console.log("deletion");
       }
     }
   });
   return (
-    <ResizeRotateNode>
+    <ResizeRotateNode
+      handleClickOutside={isSelected ? refOutside : () => {}}
+      onClick={handleClick}
+      isResizable={resizable}
+    >
       <CustomNode style={{ height: "100%" }}>
         <div>
           <p>{`aaaaaaaaaaa \n aaaaaaaaa \n aaaaaaaa`} </p>

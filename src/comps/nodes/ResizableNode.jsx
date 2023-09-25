@@ -18,11 +18,12 @@ export default function ResizeRotateNode({
   isResizable = true,
   isRotable = false,
   children,
+  handleClickOutside,
+  onClick = () => {},
 }) {
   const rotateControlRef = useRef(null);
   const updateNodeInternals = useUpdateNodeInternals();
   const [rotation, setRotation] = useState(0);
-  const [resizable, setResizable] = useState(isResizable);
   const [rotatable, setRotatable] = useState(isRotable);
 
   useEffect(() => {
@@ -46,12 +47,14 @@ export default function ResizeRotateNode({
   return (
     <>
       <div
+        ref={handleClickOutside}
+        onClick={onClick}
         style={{
           transform: `rotate(${rotation}deg)`,
         }}
         className={styles.node}
       >
-        <NodeResizer isVisible={resizable} minWidth={180} minHeight={100} />
+        <NodeResizer isVisible={isResizable} minWidth={180} minHeight={100} />
         <div
           ref={rotateControlRef}
           style={{

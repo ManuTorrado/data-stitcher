@@ -10,33 +10,12 @@ import { Position } from "reactflow";
 export const initialNodes = [
   {
     id: "1",
-    position: { x: 0, y: 0 },
-    data: {
-      label: (
-        <div>
-          <img width="32px" src={user} />
-        </div>
-      ),
-    },
-    type: "complete",
-    style: {
-      background: "rgba(255, 0, 0, 0)",
-    },
-  },
-  {
-    id: "2",
-    position: { x: 0, y: 100 },
-    data: { label: "2" },
-    style: { background: "rgba(255, 0, 0, 0)" },
-  },
-  {
-    id: "3",
     position: { x: 0, y: 100 },
     data: { label: "amsdkqjkwelqjewlq" },
     type: "note",
   },
   {
-    id: "4",
+    id: "2",
     position: { x: 100, y: 100 },
     data: { label: "Node 1" },
     type: "note",
