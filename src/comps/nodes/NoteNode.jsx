@@ -1,6 +1,8 @@
-import React, { memo, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import { Handle, NodeProps, Position } from "reactflow";
 import { BsFillArrowDownRightCircleFill } from "react-icons/bs";
+import CustomNode from "./CustomNode";
+import ResizeRotateNode from "./ResizableNode";
 
 const style = {
   backgroundColor: "grey",
@@ -9,14 +11,13 @@ const style = {
 
 const NoteNode = ({ data }) => {
   const [isSelected, SetSelected] = useState(false);
-  const [hover, setHover] = useState(false);
-  const toggleHover = () => setHover(true);
-  const disableHover = () => setHover(false);
 
   const handleClick = () => {
     console.log("clicked");
     SetSelected(true);
   };
+
+  useEffect(() => {});
 
   document.addEventListener("keydown", function (event) {
     if (event.key === "Delete") {
@@ -26,17 +27,13 @@ const NoteNode = ({ data }) => {
     }
   });
   return (
-    <div
-      style={style}
-      onMouseEnter={toggleHover}
-      onMouseLeave={disableHover}
-      onClick={handleClick}
-    >
-      <Handle type="source" position={Position.Bottom} id="left" />
-      {data?.label}
-      <Handle type="target" position={Position.Bottom} id="right" />
-      {hover && <BsFillArrowDownRightCircleFill size={8} />}
-    </div>
+    <ResizeRotateNode>
+      <CustomNode style={{ height: "100%" }}>
+        <div>
+          <p>{`aaaaaaaaaaa \n aaaaaaaaa \n aaaaaaaa`} </p>
+        </div>
+      </CustomNode>
+    </ResizeRotateNode>
   );
 };
 

@@ -15,12 +15,15 @@ export default function ResizeRotateNode({
   sourcePosition = Position.Left,
   targetPosition = Position.Right,
   data,
+  isResizable = true,
+  isRotable = false,
+  children,
 }) {
   const rotateControlRef = useRef(null);
   const updateNodeInternals = useUpdateNodeInternals();
   const [rotation, setRotation] = useState(0);
-  const [resizable, setResizable] = useState(true);
-  const [rotatable, setRotatable] = useState(true);
+  const [resizable, setResizable] = useState(isResizable);
+  const [rotatable, setRotatable] = useState(isRotable);
 
   useEffect(() => {
     if (!rotateControlRef.current) {
@@ -56,29 +59,7 @@ export default function ResizeRotateNode({
           }}
           className={`nodrag ${styles.rotateHandle}`}
         />
-        <div>
-          {data?.label}
-          <div>
-            <label>
-              <input
-                type="checkbox"
-                checked={resizable}
-                onChange={(evt) => setResizable(evt.target.checked)}
-              />
-              resizable
-            </label>
-          </div>
-          <div>
-            <label>
-              <input
-                type="checkbox"
-                checked={rotatable}
-                onChange={(evt) => setRotatable(evt.target.checked)}
-              />
-              rotatable
-            </label>
-          </div>
-        </div>
+        {children}
         <Handle
           style={{ opacity: 0 }}
           position={sourcePosition}

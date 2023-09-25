@@ -11,9 +11,9 @@ const sourceStyle = {
   zIndex: 1,
 };
 
-const CustomNode = ({ id }) => {
+const CustomNode = ({ id, children, style }) => {
   const updateNodeInternals = useUpdateNodeInternals();
-  const { cableSelected, setCableSelected } = useContext(FlowContext);
+  const { cableSelected } = useContext(FlowContext);
 
   const connectionNodeId = useStore(connectionNodeIdSelector);
 
@@ -25,10 +25,11 @@ const CustomNode = ({ id }) => {
   }, [cableSelected]);
 
   return (
-    <div className="customNode">
+    <div style={style}>
       <div
         className="customNodeBody"
         style={{
+          height: "100%",
           borderStyle: isTarget ? "dashed" : "solid",
           backgroundColor: isTarget ? "#ffcce3" : "white",
         }}
@@ -52,6 +53,7 @@ const CustomNode = ({ id }) => {
           type="target"
           isConnectable={cableSelected}
         />
+        {children}
       </div>
     </div>
   );
